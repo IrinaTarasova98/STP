@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Квартира # ' + ${name}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+	<h1 class="container" th:text="'Квартира номер ' + ${name}"></h1>
+</head>
+<body style="background-color:rgba(240, 200, 140, 0.4);">
+	<div class="container pt-4">
+		<table>
+			<tr>
+				<th>           </th>
+				<th>Свет       </th>
+				<th>Температура</th>
+			</tr>
+			
+			<tr>
+				<td>Прихожая       </td>
+				<td>
+					<output for="slider1" id="light0">50 %</output><br>
+					<input name="l1" type="range" id="slider1" min="0" max="100" value="<?=$lights[0]?>" step="1" oninput="outputLight(value, '#light0', '#d1XMTvuzz', '#a1q5hVfomy')">
+				</td>
+				<td>
+					<output for="slider2" id="temp0">25 °C</output><br>
+					<input type="range" id="slider2" min="20" max="50" value="<?=$temper[0]?>" step="1" oninput="outputTemp(value, '#temp0', '#c2Kkv5l4K2')">
+				</td>
+			</tr>
+	
+			<tr>
+				<td>Кухня          </td>
+				<td>
+					<output for="slider3" id="light1">50 %</output><br>
+					<input type="range" id="slider3" min="0" max="100" value="<?=$lights[1]?>" step="1" oninput="outputLight(value, '#light1', '#d6A9rrWj1W', '#a2JYuLnd3N')">
+				</td>
+				<td>
+					<output for="slider4" id="temp1">25 °C</output><br>
+					<input type="range" id="slider4" min="20" max="50" value="<?=$temper[1]?>" step="1" oninput="outputTemp(value, '#temp1', '#b1Q6Tb1kGC')">
+				</td>
+			</tr>
+				
+			<tr>
+				<td>Ванная         </td>
+				<td>
+					<output for="slider5" id="light2">50 %</output><br>
+					<input type="range" id="slider5" min="0" max="100" value="<?=$lights[2]?>" step="1" oninput="outputLight(value, '#light2', '#a4Un7R4Ic', '#clE4vAh4X')">
+				</td>
+				<td>
+					<output for="slider6" id="temp2">25 °C</output><br>
+					<input type="range" id="slider6" min="20" max="50" value="<?=$temper[2]?>" step="1" oninput="outputTemp(value, '#temp2', '#b3UJEcGoza')">
+				</td>
+			</tr>
+				
+			<tr>
+				<td>Комната        </td>
+				<td>
+					<output for="slider7" id="light3">50 %</output><br>
+					<input type="range" id="slider7" min="0" max="100" value="<?=$lights[2]?>" step="1" oninput="outputLight(value, '#light3', '#ad8qocp7f', '#bd14lpn6i')">
+				</td>
+				<td>
+					<output for="slider8" id="temp3">25 °C</output><br>
+					<input type="range" id="slider8" min="20" max="50" value="<?=$temper[3]?>" step="1" oninput="outputTemp(value, '#temp3', '#c5I1LTsLLc')">
+				</td>
+			</tr>
+				
+			<tr>
+				<td>Балкон         </td>
+				<td>
+					<output for="slider9" id="light4">50 %</output><br>
+					<input type="range" id="slider9" min="0" max="100" value="<?=$lights[4]?>" step="1" oninput="outputLight(value, '#light4', '#b1TURKYP0j', '#d5nn3nv3ZF')">
+				</td>
+			</tr>
+		</table>
+		
+		<input type="button" class="btn btn-md btn-primary" onclick="location.href='/'" value="Вернуться" >
+		
+	</div>
+</body>
+</html>
