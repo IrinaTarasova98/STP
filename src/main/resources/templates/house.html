@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head> 
+	    <title th:text="${title}"></title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
+		<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+		<script> // добавление у удаление строк ПРИ НАЖАТИИ КНОПКИ 
+			$(document).ready(function () {
+		      // количество строк
+		      var rowIdx = 0;
+		      // добавление строки
+				$('#addBtn').on('click', function () {
+				// наполнение строки элементами
+				$('#tbody').append(`
+					<tr id="R${++rowIdx}" >
+						<td class="row-index text-center">
+							<p>Квартира ${rowIdx}</p>
+						</td>
+						<td class="text-center">
+							<input type="button" class="btn btn-success" onclick="location.href='/apartments?name=${rowIdx}'" value="Редактировать" >
+						</td>		
+						<td class="text-center">
+							<button class="btn btn-danger remove" type="button">Удалить</button>
+						</td>
+					</tr>`);
+		      });
+		  
+		      // функция удаление строки
+		      $('#tbody').on('click', '.remove', function () {
+				// получить все соседние строки
+		        var child = $(this).closest('tr').nextAll();
+		        // пройти по всем строкам чтобы изменить индекс
+		        child.each(function () {
+					// получить текущий id
+					var id = $(this).attr('id');
+					// получить внутренности класса .row-index
+					var idx = $(this).children('.row-index').children('p');
+					// получить номер строки
+					var dig = parseInt(id.substring(1));
+					// изменить индекс строки
+					//idx.html(`Квартира ${dig - 1}`);
+					// изменить id строки
+					//$(this).attr('id', `R${dig - 1}`);
+				});
+		        // удалить строку
+		        $(this).closest('tr').remove();
+		        // уменьшение количества строк
+		        rowIdx--;
+				});
+			});
+		</script>  
+	</head>
+  
+	<body style="background-color:rgba(240, 200, 140, 0.4);">
+	<h1 class="container"> Система управления светом и температурой в квартирах </h1>
+	
+	
+	<h2> Список квартир: </h2>
+
+	
+	
+	<div class="container pt-4">
+		<button class="btn btn-md btn-primary" id="addBtn" type="button"> Добавить </button>
+		<div class="table-responsive">
+			<table class="table table-striped">
+			
+			
+				<div th:each="apartment : ${house}">
+					<tr>
+						<td class="row-index text-center">
+							<p>Квартира [[${apartment.id}]]</p>
+						</td>
+						<td class="text-center">
+							<input type="button" class="btn btn-success" th:onclick="location.href='/apartments?name=[[${apartment.id}]]'" value="Редактировать" >
+						</td>		
+						<td class="text-center">
+							<button class="btn btn-danger remove" type="button">Удалить</button>
+						</td>
+					</tr>
+				</div>
+	
+				<tbody id="tbody"> </tbody>
+			</table>
+	  </div>
+	</div>
+	</body>
+</html>
