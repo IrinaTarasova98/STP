@@ -1,91 +1,89 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-	<head> 
-	    <title th:text="${title}"></title>
-	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
-		<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	
-		<script> // добавление у удаление строк ПРИ НАЖАТИИ КНОПКИ 
-			$(document).ready(function () {
-		      // количество строк
-		      var rowIdx = 0;
-		      // добавление строки
-				$('#addBtn').on('click', function () {
-				// наполнение строки элементами
-				$('#tbody').append(`
-					<tr id="R${++rowIdx}" >
-						<td class="row-index text-center">
-							<p>Квартира ${rowIdx}</p>
-						</td>
-						<td class="text-center">
-							<input type="button" class="btn btn-success" onclick="location.href='/apartments?name=${rowIdx}'" value="Редактировать" >
-						</td>		
-						<td class="text-center">
-							<button class="btn btn-danger remove" type="button">Удалить</button>
-						</td>
-					</tr>`);
-		      });
-		  
-		      // функция удаление строки
-		      $('#tbody').on('click', '.remove', function () {
-				// получить все соседние строки
-		        var child = $(this).closest('tr').nextAll();
-		        // пройти по всем строкам чтобы изменить индекс
-		        child.each(function () {
-					// получить текущий id
-					var id = $(this).attr('id');
-					// получить внутренности класса .row-index
-					var idx = $(this).children('.row-index').children('p');
-					// получить номер строки
-					var dig = parseInt(id.substring(1));
-					// изменить индекс строки
-					//idx.html(`Квартира ${dig - 1}`);
-					// изменить id строки
-					//$(this).attr('id', `R${dig - 1}`);
-				});
-		        // удалить строку
-		        $(this).closest('tr').remove();
-		        // уменьшение количества строк
-		        rowIdx--;
-				});
-			});
-		</script>  
-	</head>
-  
-	<body style="background-color:rgba(240, 200, 140, 0.4);">
-	<h1 class="container"> Система управления светом и температурой в квартирах </h1>
-	
-	
-	<h2> Список квартир: </h2>
+package controllers;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.demo.model.Apartment;
+
+@Controller
+public class MainController {
+
+	// при открытии главной страницы:
+	// создать экземпляр класса "House"
+	// создать список объектов типа "Apartment"
+	// получить в экземпляр класса "House" список номеров квартир (House.getNumbers())
+	// вернуть список номеров квартир int[] на страницу 
+	@GetMapping(value = "/main")
+	public String GetHouse(Model model) {
+		// массив квартир
+		ArrayList<Apartment> apartments = new ArrayList<>();
+		try {
+			// открытие файла для чтения
+			@SuppressWarnings("resource")
+			BufferedReader reader = new BufferedReader(new FileReader ("C:\\stp\\src\\main\\resources\\templates\\House"));
+			// строка для чтения
+			String         line = null;
+			// чтение номеров 
+		    while((line = reader.readLine()) != null) {
+		    	// запись номера в массив
+		    	Apartment apartment = new Apartment(Integer.parseInt(line));
+		    	apartments.add(apartment);
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// поместить массив в модель
+		model.addAttribute("house", apartments);
+		// поместить в модель название
+		model.addAttribute("title", "Главная страница");
+		return "house"; 
+	}
 	
+
+	// при переходе на страницу квартиры
+	// получить номер квартиры
+	// получить параметры квартиры из файла (Apartment.getValues())
+	// вернуть параметры int[] на страницу
+	@GetMapping(value = "/apartments")
+	public String getApartment(
+			@RequestParam(name = "name", defaultValue = "0") String name, Model model
+			) {
+		model.addAttribute("name", name);
+		return "apartments";
+	}
+ 
+	// при нажатии кнопки "Добавить" на странице "/"
+	// получить id новой квартиры 
+	// создать экземпляр класса "Apartment"
+	// добавить новый номер в файл "House" (House.addNumber())
+	@PostMapping(value="/tmain1")
+	public void delApart(@RequestParam() int id)
+	{   
+	   
+	}
 	
-	<div class="container pt-4">
-		<button class="btn btn-md btn-primary" id="addBtn" type="button"> Добавить </button>
-		<div class="table-responsive">
-			<table class="table table-striped">
-			
-			
-				<div th:each="apartment : ${house}">
-					<tr>
-						<td class="row-index text-center">
-							<p>Квартира [[${apartment.id}]]</p>
-						</td>
-						<td class="text-center">
-							<input type="button" class="btn btn-success" th:onclick="location.href='/apartments?name=[[${apartment.id}]]'" value="Редактировать" >
-						</td>		
-						<td class="text-center">
-							<button class="btn btn-danger remove" type="button">Удалить</button>
-						</td>
-					</tr>
-				</div>
+	// при нажатии кнопки "Удалить" на странице "/"
+	// получить id удаляемой квартиры 
+	// удалить номер из файла "House" (House.delNumber())
+	@PostMapping(value="/tmain2")
+	public void addApart(@RequestParam() int id)
+	{   
+	   
+	}
 	
-				<tbody id="tbody"> </tbody>
-			</table>
-	  </div>
-	</div>
-	</body>
-</html>
+	// при нажатии кнопки "Назад" на странице "/apartment"
+	// получить id квартиры
+	// записать новые значения в файл с номером id (Apartment.setValuse())
+	@PostMapping(value="/tapartments")
+	public void setParams()
+	{
+		
+	}
+}
