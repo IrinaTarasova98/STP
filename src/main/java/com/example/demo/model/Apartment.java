@@ -1,4 +1,4 @@
-package com.example.demo.model;
+﻿package com.example.demo.model;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -32,7 +32,7 @@ public class Apartment {
 	// конструктор
 	public Apartment(int id)
 	{
-		values = new int[] {0, 20, 0, 20, 0, 20, 0, 20, 0};		
+		values = new int[] {0, 20, 0, 20, 0, 20, 0, 20, 0};
 		this.id = id;
 	}
         
@@ -49,28 +49,28 @@ public class Apartment {
 			}
 			scanner.close();
 		}
-        	catch(IOException ex){
-        		System.out.println(ex.getMessage());
-        	} 
+		catch(IOException ex){
+			System.out.println(ex.getMessage());
+		} 
     		return values;
 	}    
     
 	public void setValues(int[] set) {
 		values = set;
 	}
-    
-	// сохранить параметры в файл
+    	
+	// сохранить параметры в файл	
 	public void writeValues() {
 		try(FileWriter writer = new FileWriter("src/main/resources/appartments/" + this.id, false))
 		{
-			for(int i = 0; i < 9; i++) {
+			for (int i = 0; i < 9; i++) {
 				writer.write(Integer.toString(values[i]));
 				writer.append(System.lineSeparator());
-			} 
+        			} 
 			writer.close();
 		}
-		catch(IOException ex){     
+		catch(IOException ex){         
 			System.out.println(ex.getMessage());
 		} 
-	}
+	}       
 }

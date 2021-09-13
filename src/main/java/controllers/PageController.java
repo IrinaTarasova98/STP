@@ -1,4 +1,4 @@
-package controllers;
+﻿package controllers;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class PageController {
 	
 	// добавить файл квартиры 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	private String addApart(){
+	private String addApart() {
 		File folder = new File("src/main/resources/appartments");
 		File[] listOfFiles = folder.listFiles();
 		// найти свободный id 
@@ -61,15 +61,15 @@ public class PageController {
 		{
 			// добавляем в дом квартиры с номерами из файла
 			for (int i = 0; i < listOfFiles.length; i++) {
-			    if (Integer.parseInt(listOfFiles[i].getName()) == id)
-			    {
-			    	f = 1;
-			    	break;
-			    }
+				if (Integer.parseInt(listOfFiles[i].getName()) == id)
+				{
+			    		f = 1;
+				    	break;
+				}
 			}
-		    if (f == 0) break;
-		    f = 0;
-		    id++;
+			if (f == 0) break;
+			f = 0;
+			id++;
 		}
 		// создание нового файла 
 		String path = "src/main/resources/appartments/" + id;
@@ -79,10 +79,10 @@ public class PageController {
 			file.createNewFile();
 			System.out.println("Создали квартиру №" + id);
 		}
-        catch(IOException ex){
-        	System.out.println(ex.getMessage());
-        } 
-	    return "redirect:/";
+	catch(IOException ex){
+		System.out.println(ex.getMessage());
+	} 
+		return "redirect:/";
 	}
 	
 	// удалить файл квартиры
@@ -90,6 +90,6 @@ public class PageController {
 	private String deleteApart(@RequestParam String id){
 		File file = new File("src/main/resources/appartments/" + id);
 		if (file.delete()) System.out.println("Удилили квартиру №" + id);
-	    return "redirect:/";
+		return "redirect:/";
 	}
 }

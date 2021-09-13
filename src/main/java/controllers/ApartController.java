@@ -1,4 +1,4 @@
-package controllers;
+﻿package controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ public class ApartController
 	{
 		apart = new Apartment(Integer.parseInt(name));
 		model.addAttribute("name", name);
-    	model.addAttribute("values", apart.getValues());
+		model.addAttribute("values", apart.getValues());
 		return "apartments";
 	}
 	
@@ -32,6 +32,6 @@ public class ApartController
 	private String saveValues(@RequestParam("values") int[] set ){
 		apart.setValues(set);
 		apart.writeValues();
-	    return "redirect:/apartments?name=" + apart.id;
+		return "redirect:/apartments?name=" + apart.id;
 	}
 }
