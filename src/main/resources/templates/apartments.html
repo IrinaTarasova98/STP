@@ -1,79 +1,100 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title th:text="'Квартира # ' + ${name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
-	<h1 class="container" th:text="'Квартира номер ' + ${name}"></h1>
-</head>
-<body style="background-color:rgba(240, 200, 140, 0.4);">
-	<div class="container pt-4">
-		<table>
-			<tr>
-				<th>           </th>
-				<th>Свет       </th>
-				<th>Температура</th>
-			</tr>
+	<head>
+		<title th:text="'Квартира # ' + ${name}"></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	</head>
+	<body style="background-color:rgba(240, 200, 140, 0.4);">
+		<h1 class="container"> Квартира номер <span th:text="${name}"></span></h1>
+		<div class="container pt-4">
+		
+			<form action="/save" method="post">
+				<table>
+					<tr>
+						<th>           </th>
+						<th>Свет       </th>
+						<th>Температура</th>
+					</tr>
+					
+					
+						<tr>
+							<td>Прихожая       </td>
+							<td>	
+								<label id="light1" th:text="${values[0]}"></label> % <br>
+								<input type="range" name="values" th:value="${values[0]}" min="0" max="100" step="1" 
+		            				oninput="document.getElementById('light1').innerHTML = this.value" />
+							</td>
+							<td>
+								<label id="temper1" th:text="${values[1]}"></label> °C<br>
+								<input type="range" name="values" th:value="${values[1]}" min="20" max="50" step="1" 
+		            				oninput="document.getElementById('temper1').innerHTML = this.value" />
+							</td>
+						</tr>
+				
+						<tr>
+							<td>Кухня          </td>
+							<td>	
+								<label id="light2" th:text="${values[2]}"></label> %<br>
+								<input type="range" name="values" th:value="${values[2]}" min="0" max="100" step="1" 
+		            				oninput="document.getElementById('light2').innerHTML = this.value" />
+							</td>
+							<td>
+								<label id="temper2" th:text="${values[3]}"></label> °C<br>
+								<input type="range" name="values" th:value="${values[3]}" min="20" max="50" step="1" 
+		            				oninput="document.getElementById('temper2').innerHTML = this.value" />
+							</td>
+						</tr>
+							
+						<tr>
+							<td>Ванная         </td>
+							<td>	
+								<label id="light3" th:text="${values[4]}"></label> %<br>
+								<input type="range" name="values" th:value="${values[4]}" min="0" max="100" step="1" 
+		            				oninput="document.getElementById('light3').innerHTML = this.value" />
+							</td>
+							<td>
+								<label id="temper3" th:text="${values[5]}"></label> °C<br>
+								<input type="range" name="values" th:value="${values[5]}" min="20" max="50" step="1" 
+		            				oninput="document.getElementById('temper3').innerHTML = this.value" />
+							</td>
+						</tr>
+							
+						<tr>
+							<td>Комната        </td>
+							<td>	
+								<label id="light4" th:text="${values[6]}"></label> %<br>
+								<input type="range" name="values" th:value="${values[6]}" min="0" max="100" step="1" 
+		            				oninput="document.getElementById('light4').innerHTML = this.value" />
+							</td>
+							<td>
+								<label id="temper4" th:text="${values[7]}"></label> °C<br>
+								<input type="range" name="values" th:value="${values[7]}" min="20" max="50" step="1" 
+		            				oninput="document.getElementById('temper4').innerHTML = this.value" />
+							</td>
+						</tr>
+							
+						<tr>
+							<td>Балкон         </td>
+							<td>	
+								<label id="light5" th:text="${values[8]}"></label> %<br>
+								<input type="range" name="values" th:value="${values[8]}" min="0" max="100" step="1" 
+		            				oninput="document.getElementById('light5').innerHTML = this.value" />
+							</td>
+						</tr>
+				</table>
+        		<input type="submit" class="btn btn-md btn-success" value="Сохранить"/>
+			</form>
+			<br>
+			<input type="button" class="btn btn-md btn-primary" onclick="location.href='/'" value="Вернуться" >
 			
-			<tr>
-				<td>Прихожая       </td>
-				<td>
-					<output for="slider1" id="light0">50 %</output><br>
-					<input name="l1" type="range" id="slider1" min="0" max="100" value="<?=$lights[0]?>" step="1" oninput="outputLight(value, '#light0', '#d1XMTvuzz', '#a1q5hVfomy')">
-				</td>
-				<td>
-					<output for="slider2" id="temp0">25 °C</output><br>
-					<input type="range" id="slider2" min="20" max="50" value="<?=$temper[0]?>" step="1" oninput="outputTemp(value, '#temp0', '#c2Kkv5l4K2')">
-				</td>
-			</tr>
-	
-			<tr>
-				<td>Кухня          </td>
-				<td>
-					<output for="slider3" id="light1">50 %</output><br>
-					<input type="range" id="slider3" min="0" max="100" value="<?=$lights[1]?>" step="1" oninput="outputLight(value, '#light1', '#d6A9rrWj1W', '#a2JYuLnd3N')">
-				</td>
-				<td>
-					<output for="slider4" id="temp1">25 °C</output><br>
-					<input type="range" id="slider4" min="20" max="50" value="<?=$temper[1]?>" step="1" oninput="outputTemp(value, '#temp1', '#b1Q6Tb1kGC')">
-				</td>
-			</tr>
-				
-			<tr>
-				<td>Ванная         </td>
-				<td>
-					<output for="slider5" id="light2">50 %</output><br>
-					<input type="range" id="slider5" min="0" max="100" value="<?=$lights[2]?>" step="1" oninput="outputLight(value, '#light2', '#a4Un7R4Ic', '#clE4vAh4X')">
-				</td>
-				<td>
-					<output for="slider6" id="temp2">25 °C</output><br>
-					<input type="range" id="slider6" min="20" max="50" value="<?=$temper[2]?>" step="1" oninput="outputTemp(value, '#temp2', '#b3UJEcGoza')">
-				</td>
-			</tr>
-				
-			<tr>
-				<td>Комната        </td>
-				<td>
-					<output for="slider7" id="light3">50 %</output><br>
-					<input type="range" id="slider7" min="0" max="100" value="<?=$lights[2]?>" step="1" oninput="outputLight(value, '#light3', '#ad8qocp7f', '#bd14lpn6i')">
-				</td>
-				<td>
-					<output for="slider8" id="temp3">25 °C</output><br>
-					<input type="range" id="slider8" min="20" max="50" value="<?=$temper[3]?>" step="1" oninput="outputTemp(value, '#temp3', '#c5I1LTsLLc')">
-				</td>
-			</tr>
-				
-			<tr>
-				<td>Балкон         </td>
-				<td>
-					<output for="slider9" id="light4">50 %</output><br>
-					<input type="range" id="slider9" min="0" max="100" value="<?=$lights[4]?>" step="1" oninput="outputLight(value, '#light4', '#b1TURKYP0j', '#d5nn3nv3ZF')">
-				</td>
-			</tr>
-		</table>
+		</div>
 		
-		<input type="button" class="btn btn-md btn-primary" onclick="location.href='/'" value="Вернуться" >
+		<script>
+			function slider(v) {
+				var ret = document.getElementById(v).innerHTML;
+			}
+		</script>
 		
-	</div>
-</body>
+	</body>
 </html>
