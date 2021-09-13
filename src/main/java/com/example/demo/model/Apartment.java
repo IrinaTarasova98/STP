@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -23,48 +24,56 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Apartment {
-	// number
-	int id;
-    int Values[];
+	// номер квартиры
+	public int id;
+	// параметры
+    int values[];
 
-    // constructor
+    // конструктор
     public Apartment(int id)
     {
+    	values = new int[] {0, 20, 0, 20, 0, 20, 0, 20, 0};
     	this.id = id;
-    	Values = new int[9];
     }
-    
-    // get
+        
+    // получить параметры квартиры в массив
     public int[] getValues()
     {
-    	return Values;
+		try {
+			// открыть файл для чтения
+			Scanner scanner = new Scanner(new File("src/main/resources/appartments/" + this.id));
+			// получить все значения
+			int i = 0;
+			while (scanner.hasNext()) {
+					values[i++] = scanner.nextInt();
+			}
+			scanner.close();
+		}
+        catch(IOException ex){
+        	System.out.println(ex.getMessage());
+        } 
+    	return values;
     }    
     
-    // saving in file
-    public void saveValues() {
-        try(FileWriter writer = new FileWriter("values/" + String.valueOf(id), false))
-        {
-        	for (int i = 0; i < Values.length; i++)
-        	{
-        		writer.write(String.valueOf(Values[i]));
-                writer.append('\n');
-        	}
-            writer.flush();
-        }
-        catch(IOException ex){
-            System.out.println(ex.getMessage());
-        } 
+    public void setValues(int[] set) {
+    	values = set;
     }
     
-    // load values from file
-    public void loadValues() {
-    	String path = "values/" + String.valueOf(id);
-        Scanner sc = new Scanner(path);
-    	for (int i = 0; i < Values.length; i++)
-    	{
-    		Values[i] = Integer.valueOf(sc.next());
-    	}
-    	sc.close();
+    // сохранить параметры в файл
+    public void writeValues() {
+        try(FileWriter writer = new FileWriter("src/main/resources/appartments/" + this.id, false))
+        {
+        	for(int i = 0; i < 9; i++) {
+	            writer.write(Integer.toString(values[i]));
+	            writer.append(System.lineSeparator());
+        	} 
+            writer.close();
+        }
+        catch(IOException ex){
+             
+            System.out.println(ex.getMessage());
+        } 
+    	
     }
         
 }
