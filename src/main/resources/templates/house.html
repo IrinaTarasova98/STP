@@ -2,34 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head> 
 		<title th:text="${title}"></title>
-	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
-		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  	
 	</head>
   
 	<body style="background-color:rgba(240, 200, 140, 0.4);">
-	<h1 class="container"> Система управления светом и температурой в квартирах </h1>
-	
-	<div class="container pt-4">
-	            
-		<!-- Начало таблицы -->
-		
-		<table class="table table-responsive">
-			<tr> <h2> Список квартир: </h2> </tr>
-	        <tr th:each="apart : ${house}">
-	        	<td>
-	        		<p> Квартира [[${apart.id}]] </p>
-	        	</td>
-	        	<td>
-					<input type="button" class="btn btn-danger" th:onclick="location.href='/delete?id=[[${apart.id}]]'" value="Удалить">
-	            </td>
-	        	<td>
-	        		<input type="button" class="btn btn-warning" th:onclick="location.href='/apartments?name=[[${apart.id}]]'" value="Редактировать" >
-	            </td>
-	        </tr>
-	    </table>
-		<input type="button" class="btn btn-success" th:onclick="location.href='/add'" value="Добавить">
-	    
-	</div>
+		<h1 class="container"> Система управления светом и температурой в квартирах </h1>
+		<div class="container pt-4">
+			<!-- Начало таблицы -->
+			<table class="table table-responsive">
+				<tr> <h2> Список квартир: </h2> </tr>
+				<tr th:each="apart : ${house}">
+					<td>
+						<p> Квартира [[${apart.id}]] </p>
+					</td>
+					<td>
+						<input type="button" class="btn btn-danger" th:onclick="location.href='/delete?id=[[${apart.id}]]'" value="Удалить">
+					</td>
+					<td>
+						<input type="button" class="btn btn-warning" th:onclick="location.href='/apartments?name=[[${apart.id}]]'" value="Редактировать" >
+					</td>
+				</tr>
+			</table>
+			<input type="button" class="btn btn-success" th:onclick="location.href='/add'" value="Добавить">
+		</div>
 	</body>
 </html>
