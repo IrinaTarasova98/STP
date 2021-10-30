@@ -1,9 +1,8 @@
 package entity;
 
-import java.sql.Date;
-import java.sql.Time;
-
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name = "VALUE")
@@ -17,47 +16,31 @@ public class Value {
 
     // время записи
     @Column(name = "time")
-    private String time; // Time
+    private Date time; // Time
 
     // дата записи
     @Column(name = "date")
-    private String date; // Date
+    private Date date; // Date
 
     // показание
     @Column(name = "reading")
     private float reading;
 
-    // Один ко многим (Датчик - Показания) ИД Датчика
-    private Sensor sensor;
-
-    @ManyToOne
-    @JoinColumn(name = "sensorId")
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-
     public String getTime()
     {
-        return time;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        return dateFormat.format(time);
     }
 
-    public void setTime(String time)
-    {
-        this.time = time;
-    }
+    public void setTime(Date time) { this.time = time; }
 
     public String getDate()
     {
-        return date;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return dateFormat.format(date);
     }
 
-    public void setDate(String date)
+    public void setDate(Date date)
     {
         this.date = date;
     }
@@ -72,11 +55,12 @@ public class Value {
         this.reading = reading;
     }
 
-    public Sensor getSensor() {
-        return sensor;
-    }
+    // многие к одному (показания - сенсор)
+    @ManyToOne
+    @JoinColumn(name = "sensorId", nullable=false)
+    private Sensor sensor;
+    public Sensor getSensor() { return sensor; }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
-    }
+    public void setSensor(Sensor sensor) { this.sensor = sensor; }
+
 }

@@ -23,47 +23,26 @@ public class House {
     @Column(name = "number")
     private String number;
 
-    // Многие к одному (Дом - Комнаты) ИД комнаты
-    private Set<Room> rooms = new HashSet<>();
+    public int getId() { return id; }
 
-    @OneToMany(mappedBy = "HOUSE", cascade = CascadeType.ALL)
+    public void setId(int id) { this.id = id; }
+
+    public String getStreet() { return street; }
+
+    public void setStreet(String street) { this.street = street; }
+
+    public String getNumber() { return number; }
+
+    public void setNumber(String number) { this.number = number; }
+
+    // Один ко многим (дом - комнаты)
+    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
+    private Set<Room> rooms = new HashSet<>();
     public Set<Room> getRooms() { return rooms; }
 
     public void setRooms(Set<Room> rooms) { this.rooms = rooms; }
 
-    public void addRooms(Room room) {
-        room.setHouse(this);
-        this.rooms.add(room);
-    }
+    public void addRooms(Room room) { this.rooms.add(room); }
 
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-
-    public String getStreet()
-    {
-        return street;
-    }
-
-    public void setStreet(String street)
-    {
-        this.street = street;
-    }
-
-    public String getNumber()
-    {
-        return number;
-    }
-
-    public void setNumber(String number)
-    {
-        this.number = number;
-    }
+    public void delRooms(Room room) { rooms.remove(room); }
 }
