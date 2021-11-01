@@ -26,7 +26,7 @@ public class DbContent <T> {
 
     // сохранение данных в БД
     public void setContent(T item, Session session) {
-        Transaction transaction = null;
+        Transaction transaction;
         try {
             transaction = session.beginTransaction();
             session.persist(item);
