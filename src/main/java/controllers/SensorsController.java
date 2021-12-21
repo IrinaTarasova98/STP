@@ -62,7 +62,7 @@ public class SensorsController {
         - Получает параметры новой записи   "phys", "param"
         - Обращается к БД для добавления новой записи
      */
-    @RequestMapping(value = "add/Sensor")
+    @RequestMapping(value = "/add/Sensor")
     @ResponseBody
     public String addSensor(
             @RequestParam(name = "phys") String phys,
@@ -142,7 +142,6 @@ public class SensorsController {
             @RequestParam(name = "param") String param
     )
     {
-        System.out.println("UPDATE SENSOR");
         Sensor sensor = (Sensor)DataContainer.getElement(Integer.parseInt(sensorId), Sensor.class);
         assert sensor != null;
         sensor.setPhys(phys);
