@@ -118,7 +118,7 @@ public class MainController {
 					"house=" + houseId + "&room=" + roomId + "&sensor=" + sensorId +
 					"&value=" + id;
 			default:
-				return "redirect:main";
+				return "redirect:/main";
 		}
 	}
 
@@ -175,7 +175,6 @@ public class MainController {
 			@RequestParam(name = "sensor", defaultValue = "null") String sensorId
 	)
 	{
-		System.out.println("UPDATE MAIN");
 		System.out.println("Table name = " + tableName);
 		System.out.println("house = " + houseId);
 		System.out.println("room = " + roomId);
