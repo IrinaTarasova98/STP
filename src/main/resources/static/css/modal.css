@@ -1,0 +1,48 @@
+/* Модальный (фон) */
+.modal {
+  display: none; /* скрыть по умолчанию */
+  position: fixed; /* Оставаться на месте */
+  z-index: 1; /* верхний слой */
+  left: 0;
+  top: 0;
+  width: 100%; /* ширина */
+  height: 100%; /* высота */
+  overflow: auto; /* прокрутка */
+  background-color: rgba(0,0,0,0.4); /* Черный с непрозрачностью */
+}
+
+/* Кнопка закрытия */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Модальное содержание */
+.modal-content {
+  position: relative;
+  background-color: #E0FFFF;
+  /* сверху | справа | снизу | слева */
+  margin: auto 60%;
+  padding: 0;
+  border: 1px solid #888;
+  height: 100%;
+  width: 40%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Добавить анимацию */
+@keyframes animatetop {
+  from {right: -300px; opacity: 0}
+  to {right: 0; opacity: 1}
+}

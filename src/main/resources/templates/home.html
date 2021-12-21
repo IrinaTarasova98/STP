@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+		<link rel="stylesheet" th:href="@{/css/modal.css}">
+		<title>Умный дом</title>
+	</head>
+
+	<body style="background-color: #f5fffa;">
+		<!-- ПАРАМЕТРЫ -->
+		<input type="hidden" id="title" 	th:value="${title}">
+		<input type="hidden" id="tableName" th:value="${tableName}">
+		<input type="hidden" id="house" 	th:value="${house}">
+		<input type="hidden" id="room" 		th:value="${room}">
+		<input type="hidden" id="sensor"	th:value="${sensor}">
+
+		<!-- шапка страницы -->
+		<div align="center">
+			<!-- Заголовок -->
+			<h1 class="container" th:text="${title}"></h1>
+			<!-- ВЕРНУТЬСЯ на родительскую страницу -->
+			<input type="button" th:attr="onclick=|back()|" id="goBack" class="btn btn-info" value="Назад">
+			<!-- ДОБАВИТЬ элемент -->
+			<input type="button" id="myBtnAdd" class="btn btn-success" value="Добавить">
+		</div>
+
+		<!-- Таблица записей -->
+		<div class="container pt-4">
+			<table class="tableMain">
+				<tr th:each="el : ${content}">
+					<!-- ИД записи -->
+					<td th:text="${el.id}" style="width: 5%;"></td>
+					<!-- ОПИСАНИЕ записи -->
+					<td th:text="${el.inf}"></td>
+					<!-- кнопка УДАЛЕНИЯ -->
+					<td style="width: 10%;">
+						<input type="button" class="btn btn-danger" value="Удалить"
+							   th:attr="onclick=|delEl(${el.id})|">
+					<!-- кнопка РЕДАКТИРОВАНИЯ -->
+					<td style="width: 15%;">
+						<input type="button" class="btn btn-warning" value="Редактировать"
+							   th:attr="onclick=|getEl(${el.id})|">
+					</td>
+					<!-- кнопка ПЕРЕХОДА на уровень ниже -->
+					<td style="width: 10%;">
+						<input type="button" class="btn btn-primary" value="Перейти"
+							   th:attr="onclick=|next(${el.id})|">
+					</td>
+				</tr>
+			</table>
+		</div>		
+		
+		<!-- Модальное окно -->
+		<!--
+			ПОЛУЧИТЬ ЗАГОЛОВОК И НАЗНАЧИТЬ ЗНАЧЕНИЕ КНОПКИ
+			ДОБАВЛЕНИЕ: функция addEl()
+			РЕДАКТИРОВАНИЕ: функция updateEl()
+		-->
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div align="center">
+					<h3 id="modalTitle"></h3>
+					<input type="hidden" id="updateId">
+					<!-- onsubmit устанавливается в modalFunc -->
+					<form id="modalForm">
+						<table class="tableModal">
+							<!-- цикл по длине массива -->
+							<tr th:each="i: ${#numbers.sequence(0, #arrays.length(params)-1)}">
+								<!-- название параметров элемента -->
+								<td th:text="${params[i]}"></td>
+								<td>
+									<!-- поле ввода данных -->
+									<input type="text" name="array[]">
+								</td>
+							</tr>
+						</table>
+						<!-- кнопка ПОДТВЕРЖДАЕТ действие модального окна -->
+						<input type="submit" class="btn btn-success" value="Сохранить">
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<script th:src="@{/js/ajaxFunс.js}"></script>
+		<script th:src="@{/js/modalFunc.js}"></script>
+		<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+	</body>
+</html>
