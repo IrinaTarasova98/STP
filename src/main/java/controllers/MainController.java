@@ -64,21 +64,25 @@ public class MainController {
 			@RequestParam(name = "sensor", defaultValue = "null") String sensorId
 	)
 	{
-		return switch (tableName) {
-			case "House" -> "redirect:/add/House?" +
+		switch (tableName) {
+			case "House":
+				return "redirect:/add/House?" +
 					"street=" + params[0] + "&num=" + params[1];
-			case "Room" -> "redirect:/add/Room?" +
+			case "Room":
+				return "redirect:/add/Room?" +
 					"house=" + houseId +
 					"&name=" + params[0];
-			case "Sensor" -> "redirect:/add/Sensor?" +
+			case "Sensor":
+				return "redirect:/add/Sensor?" +
 					"house=" + houseId + "&room=" + roomId +
 					"&phys=" + params[0] + "&param=" + params[1];
-			default -> "redirect:/add/Value?" +
+			default:
+				return "redirect:/add/Value?" +
 					// путь к странице
 					"house=" + houseId + "&room=" + roomId + "&sensor=" + sensorId +
 					// параметры для вставки
 					"&time=" + params[0] + "&date=" + params[1] + "&read=" + params[2];
-		};
+		}
 	}
 
 	// Удаление записи из БД
@@ -97,20 +101,25 @@ public class MainController {
 			@RequestParam(name = "sensor", defaultValue = "null") String sensorId
 	)
 	{
-		return switch (tableName) {
-			case "House" -> "redirect:/del/House?" +
+		switch (tableName) {
+			case "House":
+				return "redirect:/del/House?" +
 					"house=" + id;
-			case "Room" -> "redirect:/del/Room?" +
+			case "Room":
+				return "redirect:/del/Room?" +
 					"house=" + houseId +
 					"&room=" + id;
-			case "Sensor" -> "redirect:/del/Sensor?" +
+			case "Sensor":
+				return "redirect:/del/Sensor?" +
 					"house=" + houseId + "&room=" + roomId +
 					"&sensor=" + id;
-			case "Value" -> "redirect:/del/Value?" +
+			case "Value":
+				return "redirect:/del/Value?" +
 					"house=" + houseId + "&room=" + roomId + "&sensor=" + sensorId +
 					"&value=" + id;
-			default -> "redirect:main";
-		};
+			default:
+				return "redirect:main";
+		}
 	}
 
 	// Заполнение формы изменения
@@ -129,19 +138,23 @@ public class MainController {
 			@RequestParam(name = "sensor", defaultValue = "null") String sensorId
 	)
 	{
-		return switch (tableName) {
-			case "House" -> "redirect:/getElement/House?" +
+		switch (tableName) {
+			case "House":
+				return "redirect:/getElement/House?" +
 					"house=" + id;
-			case "Room" -> "redirect:/getElement/Room?" +
+			case "Room":
+				return "redirect:/getElement/Room?" +
 					"house=" + houseId +
 					"&room=" +	id;
-			case "Sensor" -> "redirect:/getElement/Sensor?" +
+			case "Sensor":
+				return "redirect:/getElement/Sensor?" +
 					"house=" + houseId + "&room=" + roomId +
 					"&sensor=" + id;
-			default -> "redirect:/getElement/Value?" +
+			default:
+				return "redirect:/getElement/Value?" +
 					"house=" + houseId + "&room=" + roomId + "&sensor=" + sensorId +
 					"&value=" + id;
-		};
+		}
 	}
 
 	// Обновление записи в БД
@@ -166,19 +179,23 @@ public class MainController {
 		System.out.println("Table name = " + tableName);
 		System.out.println("house = " + houseId);
 		System.out.println("room = " + roomId);
-		return switch (tableName) {
-			case "House" -> "redirect:/updateElement/House?" +
+		switch (tableName) {
+			case "House":
+				return "redirect:/updateElement/House?" +
 					"house=" + id + "&street=" + params[0] + "&num=" + params[1];
-			case "Room" -> "redirect:/updateElement/Room?" +
+			case "Room":
+				return "redirect:/updateElement/Room?" +
 					"house=" + houseId +
 					"&room=" +	id + "&name=" + params[0];
-			case "Sensor" -> "redirect:/updateElement/Sensor?" +
+			case "Sensor":
+				return "redirect:/updateElement/Sensor?" +
 					"house=" + houseId + "&room=" + roomId +
 					"&sensor=" + id + "&phys=" + params[0] + "&param=" + params[1];
-			default -> "redirect:/updateElement/Value?" +
+			default:
+				return "redirect:/updateElement/Value?" +
 					"house=" + houseId + "&room=" + roomId + "&sensor=" + sensorId +
 					"&value=" + id + "&time=" + params[0] + "&date=" + params[1] + "&read=" + params[2];
-		};
+		}
 	}
 
 
