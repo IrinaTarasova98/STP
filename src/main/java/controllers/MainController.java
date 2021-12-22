@@ -175,9 +175,6 @@ public class MainController {
 			@RequestParam(name = "sensor", defaultValue = "null") String sensorId
 	)
 	{
-		System.out.println("Table name = " + tableName);
-		System.out.println("house = " + houseId);
-		System.out.println("room = " + roomId);
 		switch (tableName) {
 			case "House":
 				return "redirect:/updateElement/House?" +
