@@ -27,7 +27,7 @@ btnAdd.onclick = function() {
         arr[i].setAttribute("value", "");
     }
     // установить функцию кнопки
-    document.getElementById("modalForm").setAttribute("onSubmit", "addEl()");
+    document.getElementById("modalbtn").setAttribute("onclick", "addEl()");
     // установить заголовок модального окна
     document.getElementById("modalTitle").textContent = "Добавить";
     modal.style.display = "block";
@@ -45,21 +45,21 @@ function addEl()
     let inf = $("input[name='array[]']")
         .map(function(){return $(this).val();}).get();
 
+    for (let i = 0; i < inf.length; i++) {
+        inf[i] = encodeURIComponent(inf[i]);
+    }
+
     $.ajax({
         url: '/add',
         type: "POST",
-        async: false,
-        // кодировка
-        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
         data: {
             house: house, room: room, sensor: sensor,
             tableName: tableName, setParams: inf
         },
         success : function(url) {
-            alert("Добавление выполнено.\nПеренаправление на " + url);
             window.location.replace(url);
         },
-        error: function () {
+        error: function (url) {
             alert("Не удалось добавить элемент.");
         }
     })
@@ -77,8 +77,6 @@ function getEl(idBtn) {
     $.ajax({
         url:'/getElement',
         type: "GET",
-        async: true,
-        // тип получаемых данных
         dataType: "json",
         data: {
             house: house, room: room, sensor:sensor, tableName: tableName, id: idBtn
@@ -93,8 +91,8 @@ function getEl(idBtn) {
             // сохранить id изменяемого элемента (для функции update)
             document.getElementById("updateId").setAttribute("value", idBtn);
             // установить функцию кнопки
-            document.getElementById("modalForm")
-                .setAttribute("onSubmit", "updateEl(" + idBtn + ")");
+            document.getElementById("modalbtn")
+                .setAttribute("onclick", "updateEl()");
             // установить заголовок модального окна
             document.getElementById("modalTitle").textContent = "Редактировать";
             // запустить модальное окно
@@ -118,15 +116,17 @@ function updateEl()
     let inf = $("input[name='array[]']")
         .map(function(){return $(this).val();}).get();
 
+    for (let i = 0; i < inf.length; i++) {
+        inf[i] = encodeURIComponent(inf[i]);
+    }
+
     $.ajax({
         url: '/updateElement',
         type: "POST",
-        async: true,
         data: {
             house: house, room: room, sensor: sensor, tableName: tableName, setParams: inf, id : id
         },
         success: function(url) {
-            alert("Редактирование выполнено.\nПеренаправление на " + url);
             window.location.replace(url);
         },
         error: function () {
@@ -134,5 +134,3 @@ function updateEl()
         }
     })
 }
-
-

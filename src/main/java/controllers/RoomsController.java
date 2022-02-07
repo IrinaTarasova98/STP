@@ -58,7 +58,7 @@ public class RoomsController {
         - Обращается к БД для добавления новой записи
         (После обновления записи страница обновляется)
      */
-    @RequestMapping(value = "add/Room")
+    @RequestMapping(value = "/add/Room")
     @ResponseBody
     public String addRoom(
             @RequestParam(name = "house") String houseId,

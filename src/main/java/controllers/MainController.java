@@ -109,7 +109,7 @@ public class MainController {
 			case "Value" -> "redirect:/del/Value?" +
 					"house=" + houseId + "&room=" + roomId + "&sensor=" + sensorId +
 					"&value=" + id;
-			default -> "redirect:main";
+			default -> "redirect:/main";
 		};
 	}
 
@@ -162,7 +162,6 @@ public class MainController {
 			@RequestParam(name = "sensor", defaultValue = "null") String sensorId
 	)
 	{
-		System.out.println("UPDATE MAIN");
 		System.out.println("Table name = " + tableName);
 		System.out.println("house = " + houseId);
 		System.out.println("room = " + roomId);
